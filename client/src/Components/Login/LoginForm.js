@@ -8,34 +8,34 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { VStack } from "@chakra-ui/layout";
-
+import { useTranslation } from "react-i18next";
 export default function LoginForm() {
   const [show, setShow] = useState(false);
 
   const handleChangeShow = () => {
     setShow(!show);
   };
-
+  const { t } = useTranslation();
   return (
     <VStack>
       <FormControl isRequired>
-        <FormLabel>Email</FormLabel>
+        <FormLabel>{t("email")}</FormLabel>
         <Input placeholder="example@example.com" />
       </FormControl>
 
       <FormControl isRequired>
-        <FormLabel>Mật khẩu</FormLabel>
+        <FormLabel>{t("password")}</FormLabel>
         <InputGroup size="md">
           <Input type={show ? "text" : "password"} />
-          <InputRightElement width="4.5em">
+          <InputRightElement width="5.5em">
             <Button h="1.75em" size="sm" onClick={handleChangeShow}>
-              {show ? "Ẩn" : "Hiện"}
+              {show ? `${t("show")}` : `${t("hide")}`}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
       <Button colorScheme="blue" width="100%" style={{ marginTop: "15px" }}>
-        Đăng nhập tài khoản
+        {t("button_login")}
       </Button>
     </VStack>
   );

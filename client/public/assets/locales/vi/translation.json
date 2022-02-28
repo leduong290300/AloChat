@@ -4,5 +4,18 @@
   "language_us": "Tiếng Anh",
   "language_kr": "Tiếng Hàn",
   "name_button_login": "Đăng nhập",
-  "name_button_register": "Đăng ký"
+  "name_button_register": "Đăng ký",
+  "button_login": "Đăng nhập tài khoản",
+  "button_register": "Đăng kí tài khoản",
+  "name": "Tên tài khoản",
+  "password": "Mật khẩu",
+  "confirm_password": "Nhập lại mật khẩu",
+  "email": "Email",
+  "upload_image": "Tải ảnh lên",
+  "show": "Hiện",
+  "hide": "Ẩn",
+  "upload_image_to_cloudinary": "Vui lòng chọn ảnh",
+  "fields": "Vui lòng điền tất cả các trường",
+  "password_not_patch": "Mật khẩu nhập lại không khớp",
+  "regax_email": "Email không hợp lệ"
 }

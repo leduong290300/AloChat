@@ -4,5 +4,18 @@
   "language_us": "English",
   "language_kr": "한국어",
   "name_button_login": "로그인",
-  "name_button_register": "회원가입"
+  "name_button_register": "회원가입",
+  "button_login": "로그인",
+  "button_register": "가입하기",
+  "name": "사용자 이름",
+  "password": "비밀번호",
+  "confirm_password": "비밀번호 재확인",
+  "email": "이메일",
+  "upload_image": "파일 선택",
+  "show": "비밀번호 표시",
+  "hide": "솜기기",
+  "upload_image_to_cloudinary": "사진을 선택해 주십시오",
+  "fields": "모든 필드를 기입해 주세요",
+  "password_not_patch": "다시 입력한 암호가 일치하지 않습니다",
+  "regax_email": "이메일 유효하지 않습니다"
 }

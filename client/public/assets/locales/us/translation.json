@@ -4,5 +4,18 @@
   "language_us": "English",
   "language_kr": "Korea",
   "name_button_login": "Login",
-  "name_button_register": "SingUp"
+  "name_button_register": "SingUp",
+  "button_login": "Login Account",
+  "button_register": "SingUp Account",
+  "name": "Username",
+  "password": "Password",
+  "confirm_password": "Confirm_password",
+  "email": "Email",
+  "upload_image": "Upload file",
+  "show": "Show",
+  "hide": "Hide",
+  "upload_image_to_cloudinary": "Please select an image",
+  "fields": "Please fill all fields",
+  "password_not_patch": "Password do not match",
+  "regax_email": "Email invalid"
 }
