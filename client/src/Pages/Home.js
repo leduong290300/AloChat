@@ -41,6 +41,9 @@ export default function Home() {
     document.body.dir = currentLanguage.dir || "ltr";
   }, [currentLanguage, t]);
 
+  const handleOnChangeLanguage = (e) => {
+    i18next.changeLanguage(e.target.value);
+  };
   return (
     <Container maxW="xl" centerContent>
       <Box
@@ -57,15 +60,12 @@ export default function Home() {
         <Text fontSize="30px" fontFamily="Work sans" color="black">
           Alochat
         </Text>
-        <Select placeholder={t("choose_language")}>
+        <Select
+          placeholder={t("choose_language")}
+          onClick={handleOnChangeLanguage}
+        >
           {languages.map(({ code, name, country_code }) => (
-            <option
-              key={code}
-              value={code}
-              onClick={() => {
-                i18next.changeLanguage(code);
-              }}
-            >
+            <option key={code} value={code}>
               {name}
             </option>
           ))}
