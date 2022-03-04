@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import { UserContext } from "../../Context/UserContext";
-
+import { useHistory } from "react-router-dom";
 export default function SignUpForm() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -22,6 +22,8 @@ export default function SignUpForm() {
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
   const { registerUser } = useContext(UserContext);
+  const history = useHistory();
+
   const handleChangeShow = () => {
     setShow(!show);
   };
@@ -110,7 +112,17 @@ export default function SignUpForm() {
     }
     try {
       const registerData = await registerUser({ name, email, password, image });
-      if (!registerData.success) {
+      if (registerData.success) {
+        toast({
+          title: registerData.message ? `${t("register_success")}` : "",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+        setLoading(false);
+        history.push("/chat");
+      } else {
         toast({
           title: registerData.message,
           status: "warning",

@@ -17,5 +17,11 @@
   "upload_image_to_cloudinary": "Vui lòng chọn ảnh",
   "fields": "Vui lòng điền tất cả các trường",
   "password_not_patch": "Mật khẩu nhập lại không khớp",
-  "regax_email": "Email không hợp lệ"
+  "regax_email": "Email không hợp lệ",
+  "login_success": "Đăng nhập thành công",
+  "register_success": "Đăng ký thành công",
+  "dont_have_a_account": "Tài khoản không tồn tại",
+  "have_a_account": "Email đăng kí tài khoản đã được sử dụng",
+  "password_fail": "Email hoặc mật khẩu không chính xác",
+  "server_error": "Lỗi máy chủ"
 }
