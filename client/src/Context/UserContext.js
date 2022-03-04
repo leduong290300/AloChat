@@ -36,7 +36,6 @@ const UserProvider = ({ children }) => {
       });
     }
   };
-
   useEffect(() => loadUser(), []);
 
   //Đăng kí tài khoản
@@ -44,7 +43,7 @@ const UserProvider = ({ children }) => {
     try {
       const response = await axios.post(`${apiUrl}/user/register`, userForm);
       if (response.data.success)
-        localStorage.setItem("user_token", response.data.token);
+        localStorage.setItem("user_token", response.data.accessToken);
 
       await loadUser();
 
@@ -55,7 +54,23 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  const data = { loadUser, authState, registerUser };
+  //Đăng nhập tài khoản
+  const loginUser = async (userForm) => {
+    try {
+      const response = await axios.post(`${apiUrl}/user/login`, userForm);
+      if (response.data.success)
+        localStorage.setItem("user_token", response.data.accessToken);
+
+      await loadUser();
+
+      return response.data;
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const data = { loadUser, authState, registerUser, loginUser };
 
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };

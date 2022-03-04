@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import {
   Container,
   Box,
@@ -9,13 +9,15 @@ import {
   TabPanels,
   TabPanel,
   Select,
+  Spinner,
 } from "@chakra-ui/react";
 import LoginForm from "../Components/Login/LoginForm";
 import SignUpForm from "../Components/SignUp/SignUpForm";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import cookies from "js-cookie";
-
+import { UserContext } from "../Context/UserContext";
+import { Redirect } from "react-router-dom";
 const languages = [
   {
     code: "vi",
@@ -36,6 +38,9 @@ const languages = [
 export default function Home() {
   const currentLanguageCode = cookies.get("i18next") || "vi";
   const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
+  const {
+    authState: { authLoading, isAuthenticated },
+  } = useContext(UserContext);
   const { t } = useTranslation();
   useEffect(() => {
     document.body.dir = currentLanguage.dir || "ltr";
@@ -44,6 +49,16 @@ export default function Home() {
   const handleOnChangeLanguage = (e) => {
     i18next.changeLanguage(e.target.value);
   };
+
+  if (authLoading) {
+    <Spinner
+      thickness="4px"
+      speed="0.65s"
+      emptyColor="gray.200"
+      color="blue.500"
+      size="xl"
+    />;
+  } else if (isAuthenticated) return <Redirect to="/chat" />;
   return (
     <Container maxW="xl" centerContent>
       <Box

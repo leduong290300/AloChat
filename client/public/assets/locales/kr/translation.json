@@ -17,5 +17,11 @@
   "upload_image_to_cloudinary": "사진을 선택해 주십시오",
   "fields": "모든 필드를 기입해 주세요",
   "password_not_patch": "다시 입력한 암호가 일치하지 않습니다",
-  "regax_email": "이메일 유효하지 않습니다"
+  "regax_email": "이메일 유효하지 않습니다",
+  "login_success": "로그인 성공",
+  "register_success": "가입에 성공하다",
+  "dont_have_a_account": "존재하지 않는 계정",
+  "have_a_account": "계정 등록 이메일이 사용됨",
+  "password_fail": "잘못된 이메일 또는 암호",
+  "server_error": "서버 오류"
 }

@@ -17,5 +17,11 @@
   "upload_image_to_cloudinary": "Please select an image",
   "fields": "Please fill all fields",
   "password_not_patch": "Password do not match",
-  "regax_email": "Email invalid"
+  "regax_email": "Email invalid",
+  "login_success": "Login successfully",
+  "register_success": "Register successfully",
+  "dont_have_a_account": "Account not found",
+  "have_a_account": "The account registration email has been used",
+  "password_fail": "Incorrect email or password",
+  "server_error": "Server error"
 }

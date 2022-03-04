@@ -3,6 +3,11 @@ const User = require("../Models/UserModel");
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 
+/**
+ * Route:api/user
+ * Description:Kiem tra xem nguoi dung dang nhap hay chua
+ * Protect:Public
+ */
 const AuthUser = asyncHandler(async (req, res) => {
   try {
     const user = await User.findById(req.userId).select("-password");
@@ -42,20 +47,11 @@ const RegisterUser = asyncHandler(async (req, res) => {
       process.env.JWT_SECRET,
     );
 
-    if (newUser) {
-      res.status(201).json({
-        _id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        image: newUser.image,
-        token: accessToken,
-      });
-    } else {
-      return res.status(400).json({
-        success: false,
-        message: "Đăng kí tài khoản thất bại",
-      });
-    }
+    res.json({
+      success: true,
+      message: "Đăng kí tài khoản thành công",
+      accessToken,
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -88,12 +84,10 @@ const LoginUser = asyncHandler(async (req, res) => {
     }
     const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
-    res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      image: user.image,
-      token: accessToken,
+    res.json({
+      success: true,
+      message: "Đăng nhập thành công",
+      accessToken,
     });
   } catch (error) {
     return res.status(500).json({
@@ -103,4 +97,24 @@ const LoginUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { AuthUser, RegisterUser, LoginUser };
+/**
+ * Route:api/user/search?search=
+ * Description:Tim kiem nguoi dung theo ten hoac email
+ * Protect:Public
+ */
+
+const GetAllUsers = asyncHandler(async (req, res) => {
+  const keywords = req.query.search
+    ? {
+        $or: [
+          { email: { $regax: req.query.search, $options: "i" } },
+          { name: { $regax: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const users = await User.find(keywords);
+  res.json({ users });
+});
+
+module.exports = { AuthUser, RegisterUser, LoginUser, GetAllUsers };
