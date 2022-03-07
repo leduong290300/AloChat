@@ -23,5 +23,17 @@
   "dont_have_a_account": "존재하지 않는 계정",
   "have_a_account": "계정 등록 이메일이 사용됨",
   "password_fail": "잘못된 이메일 또는 암호",
-  "server_error": "서버 오류"
+  "server_error": "서버 오류",
+  "tooltip_label": "사용자 또는 그룹 검색 ",
+  "tooltip_content": "검색",
+  "item_profile": "프로필",
+  "item_logout": "로그아웃",
+  "item_close": "닫다",
+  "input_search": "이름 또는 전자 메일로 검색",
+  "button_search": "검색",
+  "label_search": "비워둘 수 없다",
+  "error_search_title": "에러가 나다",
+  "error_search_description": "검색할 수 없는",
+  "my_chat": "대화를 나누다",
+  "create_chat": "그룹 생성"
 }

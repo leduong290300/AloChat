@@ -9,21 +9,23 @@ const User = require("../Models/UserModel");
  */
 const FetchChats = asyncHandler(async (req, res) => {
   try {
-    Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+    Chat.find({ users: { $elemMatch: { $eq: req.userId } } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
-      .populate("latestMessage")
+      .populate("lastMessage")
       .sort({ updatedAt: -1 })
       .then(async (results) => {
         results = await User.populate(results, {
-          path: "latestMessage.sender",
+          path: "lastMessage.sender",
           select: "name image email",
         });
-        res.status(200).send(results);
+        return res.status(200).json({ success: true, results });
       });
   } catch (error) {
-    res.status(400);
-    throw new Error(error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Đã xảy ra lỗi",
+    });
   }
 });
 
@@ -33,7 +35,7 @@ const FetchChats = asyncHandler(async (req, res) => {
  * Protect:Protect
  */
 
-const SendChats = asyncHandler(async (req, res) => {
+const AccessChats = asyncHandler(async (req, res) => {
   const { userId } = req.body;
 
   if (!userId) {
@@ -43,15 +45,15 @@ const SendChats = asyncHandler(async (req, res) => {
   let isChat = await Chat.find({
     isGroupChat: false,
     $and: [
-      { users: { $elemMatch: { $eq: req.user._id } } },
+      { users: { $elemMatch: { $eq: req.userId } } },
       { users: { $elemMatch: { $eq: userId } } },
     ],
   })
     .populate("users", "-password")
-    .populate("latestMessage");
+    .populate("lastMessage");
 
   isChat = await User.populate(isChat, {
-    path: "latestMessage.sender",
+    path: "lastMessage.sender",
     select: "name image email",
   });
 
@@ -61,7 +63,7 @@ const SendChats = asyncHandler(async (req, res) => {
     let chatData = {
       chatName: "sender",
       isGroupChat: false,
-      users: [req.user._id, userId],
+      users: [req.userId, userId],
     };
 
     try {
@@ -70,10 +72,12 @@ const SendChats = asyncHandler(async (req, res) => {
         "users",
         "-password",
       );
-      res.status(200).json(FullChat);
+      return res.status(200).json({ success: true, FullChat });
     } catch (error) {
-      res.status(400);
-      throw new Error(error.message);
+      return res.status(500).json({
+        success: false,
+        message: "Đã xảy ra lỗi",
+      });
     }
   }
 });
@@ -113,8 +117,10 @@ const CreateGroupChat = asyncHandler(async (req, res) => {
 
     res.status(200).json(fullGroupChat);
   } catch (error) {
-    res.status(400);
-    throw new Error(error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Đã xảy ra lỗi",
+    });
   }
 });
 
@@ -211,7 +217,7 @@ const AddToGroup = asyncHandler(async (req, res) => {
 
 module.exports = {
   FetchChats,
-  SendChats,
+  AccessChats,
   CreateGroupChat,
   RenameGroup,
   RemoveFromGroup,

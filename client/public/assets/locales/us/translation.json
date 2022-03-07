@@ -23,5 +23,17 @@
   "dont_have_a_account": "Account not found",
   "have_a_account": "The account registration email has been used",
   "password_fail": "Incorrect email or password",
-  "server_error": "Server error"
+  "server_error": "Server error",
+  "tooltip_label": "Search user or group ",
+  "tooltip_content": "Search",
+  "item_profile": "My profile",
+  "item_logout": "Loggout",
+  "item_close": "Close",
+  "input_search": "Search by name or email",
+  "button_search": "Search",
+  "label_search": "Field cannot be empty",
+  "error_search_title": "Error occurred",
+  "error_search_description": "Failed to load the search results",
+  "my_chat": "My chat",
+  "create_chat": "New group chat"
 }

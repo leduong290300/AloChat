@@ -3,7 +3,7 @@ const router = express.Router();
 const verifyToken = require("../Middleware/verifyToken");
 const {
   FetchChats,
-  SendChats,
+  AccessChats,
   CreateGroupChat,
   RenameGroup,
   RemoveFromGroup,
@@ -11,7 +11,7 @@ const {
 } = require("../Controller/ChatController");
 
 router.route("/").get(verifyToken, FetchChats);
-router.route("/").post(verifyToken, SendChats);
+router.route("/").post(verifyToken, AccessChats);
 router.route("/group").post(verifyToken, CreateGroupChat);
 router.route("/rename").put(verifyToken, RenameGroup);
 router.route("/group_remove").put(verifyToken, RemoveFromGroup);
