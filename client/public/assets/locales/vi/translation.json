@@ -23,5 +23,17 @@
   "dont_have_a_account": "Tài khoản không tồn tại",
   "have_a_account": "Email đăng kí tài khoản đã được sử dụng",
   "password_fail": "Email hoặc mật khẩu không chính xác",
-  "server_error": "Lỗi máy chủ"
+  "server_error": "Lỗi máy chủ",
+  "tooltip_label": "Tìm kiếm người dùng hoặc nhóm ",
+  "tooltip_content": "Tìm kiếm",
+  "item_profile": "Hồ sơ cá nhân",
+  "item_logout": "Đăng xuất tài khoản",
+  "item_close": "Đóng",
+  "input_search": "Tìm kiếm với tên hoặc email",
+  "button_search": "Tìm kiếm",
+  "label_search": "Không được để trống",
+  "error_search_title": "Xảy ra lỗi",
+  "error_search_description": "Không thể tìm kiểm",
+  "my_chat": "Trò chuyện",
+  "create_chat": "Tạo nhóm chat"
 }

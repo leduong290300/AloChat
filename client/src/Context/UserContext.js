@@ -70,7 +70,35 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  const data = { loadUser, authState, registerUser, loginUser };
+  //Đẵng xuất tài khoản
+  const logoutUser = () => {
+    localStorage.removeItem("user_token");
+    dispatch({
+      type: "SET_AUTH",
+      payload: { isAuthenticated: false, user: null },
+    });
+  };
+
+  //Tìm kiếm
+  const getResultSearch = async (search) => {
+    try {
+      const response = await axios.get(
+        `${apiUrl}/user/search?search=${search}`,
+      );
+      if (response.data.success) return response.data;
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+  const data = {
+    loadUser,
+    authState,
+    registerUser,
+    loginUser,
+    logoutUser,
+    getResultSearch,
+  };
 
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };
