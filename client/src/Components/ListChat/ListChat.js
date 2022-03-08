@@ -1,29 +1,28 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ChatContext } from "../../Context/ChatContext";
-import { UserContext } from "../../Context/UserContext";
-import { useToast, Box, Button, Stack, Text } from "@chakra-ui/react";
+
+import { Box, Button, Stack, Text } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
 import ChatLoading from "../ChatLoading/ChatLoading";
 
 export default function ListChat() {
-  const { selectedChat, setSelectedChat, chats, setChats, fetchChats } =
+  const { selectedChat, setSelectedChat, chats, fetchChats } =
     useContext(ChatContext);
 
-  const {
-    authState: { user },
-  } = useContext(UserContext);
-
   const [loggedUser, setLoggedUser] = useState();
-  const toast = useToast();
+
   const { t } = useTranslation();
 
-  const getSender = (loggedUser, users) => {
-    return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
-  };
   useEffect(() => {
+    setLoggedUser(localStorage.getItem("user_id"));
     fetchChats();
   }, []);
+
+  const getSender = (loggedUser, users) => {
+    return users[0]._id === loggedUser ? users[1].name : users[0].name;
+  };
+
   return (
     <Box
       d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
@@ -82,6 +81,14 @@ export default function ListChat() {
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>
+                {chat.lastMessage && (
+                  <Text fontSize="xs">
+                    <b>{chat.lastMessage.sender.name} : </b>
+                    {chat.lastMessage.content.length > 50
+                      ? chat.lastMessage.content.substring(0, 51) + "..."
+                      : chat.lastMessage.content}
+                  </Text>
+                )}
               </Box>
             ))}
           </Stack>

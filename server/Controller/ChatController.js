@@ -3,9 +3,9 @@ const Chat = require("../Models/ChatModel");
 const User = require("../Models/UserModel");
 
 /**
- * Route:api/chat
- * Description:Tải tin nhắn
- * Protect:Protect
+ * @Route api/chat
+ * @Description Tải tin nhắn
+ * @Protect Protect
  */
 const FetchChats = asyncHandler(async (req, res) => {
   try {
@@ -30,16 +30,16 @@ const FetchChats = asyncHandler(async (req, res) => {
 });
 
 /**
- * Route:api/chat
- * Description:Gửi tin nhắn
- * Protect:Protect
+ * @Route api/chat/access
+ * @Description Chọn người để trò chuyện
+ * @Protect Protect
  */
 
 const AccessChats = asyncHandler(async (req, res) => {
   const { userId } = req.body;
 
   if (!userId) {
-    return res.sendStatus(400);
+    return res.status(400).json({ success: false });
   }
 
   let isChat = await Chat.find({
@@ -83,9 +83,9 @@ const AccessChats = asyncHandler(async (req, res) => {
 });
 
 /**
- * Route:api/chat/group
- * Description:Tạo nhóm chat
- * Protect:Protect
+ * @Route api/chat/group
+ * @Description Tạo nhóm chat
+ * @Protect Protect
  */
 
 const CreateGroupChat = asyncHandler(async (req, res) => {
@@ -125,9 +125,9 @@ const CreateGroupChat = asyncHandler(async (req, res) => {
 });
 
 /**
- * Route:api/chat/rename
- * Description:Đổi tên nhóm chat
- * Protect:Protect
+ * @Route api/chat/rename
+ * @Description Đổi tên nhóm chat
+ * @Protect Protect
  */
 
 const RenameGroup = asyncHandler(async (req, res) => {
@@ -154,9 +154,9 @@ const RenameGroup = asyncHandler(async (req, res) => {
 });
 
 /**
- * Route:api/chat/group_rename
- * Description:Xóa/rời khỏi nhóm chat
- * Protect:Protect
+ * @Route api/chat/group_rename
+ * @Description Xóa/rời khỏi nhóm chat
+ * @Protect Protect
  */
 
 const RemoveFromGroup = asyncHandler(async (req, res) => {
@@ -185,9 +185,9 @@ const RemoveFromGroup = asyncHandler(async (req, res) => {
 });
 
 /**
- * Route:api/chat/group_add
- * Description:Thêm thành viên vào nhóm chat
- * Protect:Protect
+ * @Route api/chat/group_add
+ * @Description Thêm thành viên vào nhóm chat
+ * @Protect Protect
  */
 
 const AddToGroup = asyncHandler(async (req, res) => {

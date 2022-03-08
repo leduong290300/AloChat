@@ -44,8 +44,7 @@ export default function Navigation() {
     getResultSearch,
   } = useContext(UserContext);
 
-  const { setSelectedChat, accessChat, chats, setChats } =
-    useContext(ChatContext);
+  const { accessChat } = useContext(ChatContext);
 
   const handleLogout = () => logoutUser();
 
@@ -65,6 +64,7 @@ export default function Navigation() {
       const results = await getResultSearch(search);
       setLoading(false);
       setSearchResult(results.users);
+      setSearch("");
     } catch (error) {
       toast({
         title: `${t("error_search_title")}`,

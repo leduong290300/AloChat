@@ -11,7 +11,7 @@ const {
 } = require("../Controller/ChatController");
 
 router.route("/").get(verifyToken, FetchChats);
-router.route("/").post(verifyToken, AccessChats);
+router.route("/access").post(verifyToken, AccessChats);
 router.route("/group").post(verifyToken, CreateGroupChat);
 router.route("/rename").put(verifyToken, RenameGroup);
 router.route("/group_remove").put(verifyToken, RemoveFromGroup);

@@ -4,9 +4,9 @@ const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 
 /**
- * Route:api/user
- * Description:Kiem tra xem nguoi dung dang nhap hay chua
- * Protect:Public
+ * @Route api/user
+ * @Description Kiem tra xem nguoi dung dang nhap hay chua
+ * @Protect Public
  */
 const AuthUser = asyncHandler(async (req, res) => {
   try {
@@ -23,9 +23,9 @@ const AuthUser = asyncHandler(async (req, res) => {
 });
 
 /**
- * Route:api/user/register
- * Description:Đăng kí tài khoản
- * Protect:Public
+ * @Route api/user/register
+ * @Description Đăng kí tài khoản
+ * @Protect Public
  */
 const RegisterUser = asyncHandler(async (req, res) => {
   const { name, email, password, image } = req.body;
@@ -51,6 +51,7 @@ const RegisterUser = asyncHandler(async (req, res) => {
       success: true,
       message: "Đăng kí tài khoản thành công",
       accessToken,
+      userId: newUser._id,
     });
   } catch (error) {
     return res.status(500).json({
@@ -61,9 +62,9 @@ const RegisterUser = asyncHandler(async (req, res) => {
 });
 
 /**
- * Route:api/user/login
- * Description:Đăng nhập tài khoản
- * Protect:Public
+ * @Route api/user/login
+ * @Description Đăng nhập tài khoản
+ * @Protect Public
  */
 const LoginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -88,6 +89,7 @@ const LoginUser = asyncHandler(async (req, res) => {
       success: true,
       message: "Đăng nhập thành công",
       accessToken,
+      userId: user._id,
     });
   } catch (error) {
     return res.status(500).json({
@@ -98,9 +100,9 @@ const LoginUser = asyncHandler(async (req, res) => {
 });
 
 /**
- * Route:api/user/search?search=
- * Description:Tim kiem nguoi dung theo ten hoac email
- * Protect:Public
+ * @Route api/user/search?search=
+ * @Description Tim kiem nguoi dung theo ten hoac email
+ * @Protect Public
  */
 
 const GetAllUsers = asyncHandler(async (req, res) => {
