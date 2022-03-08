@@ -11,22 +11,20 @@ const ChatProvider = ({ children }) => {
 
   const accessChat = async (userId) => {
     try {
-      const response = await axios.post(`${apiUrl}/chat`, userId);
-
-      if (response.data.success) return response.data;
+      const { data } = await axios.post(`${apiUrl}/chat/access`, { userId });
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      setSelectedChat(data);
     } catch (error) {
-      if (error.response.data) return error.response.data;
-      else return { success: false, message: error.message };
+      console.log(error);
     }
   };
 
   const fetchChats = async () => {
     try {
-      const response = axios.get(`${apiUrl}/chat`);
-      if (response.data.success) return setChats(response.data);
+      const { data } = await axios.get(`${apiUrl}/chat`);
+      if (data) return setChats(data.results);
     } catch (error) {
-      if (error.response.data) return error.response.data;
-      else return { success: false, message: error.message };
+      console.log(error);
     }
   };
 

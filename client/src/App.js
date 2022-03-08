@@ -6,6 +6,7 @@ import "./App.css";
 import UserProvider from "./Context/UserContext";
 import ChatProvider from "./Context/ChatContext";
 import ProtectedRoute from "./Router/ProtectRoute";
+
 export default function App() {
   return (
     <div className="app">

@@ -44,7 +44,7 @@ const UserProvider = ({ children }) => {
       const response = await axios.post(`${apiUrl}/user/register`, userForm);
       if (response.data.success)
         localStorage.setItem("user_token", response.data.accessToken);
-
+      localStorage.setItem("user_id", response.data.userId);
       await loadUser();
 
       return response.data;
@@ -60,7 +60,7 @@ const UserProvider = ({ children }) => {
       const response = await axios.post(`${apiUrl}/user/login`, userForm);
       if (response.data.success)
         localStorage.setItem("user_token", response.data.accessToken);
-
+      localStorage.setItem("user_id", response.data.userId);
       await loadUser();
 
       return response.data;
@@ -73,6 +73,7 @@ const UserProvider = ({ children }) => {
   //Đẵng xuất tài khoản
   const logoutUser = () => {
     localStorage.removeItem("user_token");
+    localStorage.removeItem("user_id");
     dispatch({
       type: "SET_AUTH",
       payload: { isAuthenticated: false, user: null },
