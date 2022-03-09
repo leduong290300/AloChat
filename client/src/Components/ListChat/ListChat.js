@@ -5,7 +5,7 @@ import { Box, Button, Stack, Text } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
 import ChatLoading from "../ChatLoading/ChatLoading";
-
+import GroupchatModal from "../Modal/GroupchatModal";
 export default function ListChat() {
   const { selectedChat, setSelectedChat, chats, fetchChats } =
     useContext(ChatContext);
@@ -45,13 +45,15 @@ export default function ListChat() {
         alignItems="center"
       >
         {t("my_chat")}
-        <Button
-          d="flex"
-          fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-          rightIcon={<AddIcon />}
-        >
-          {t("create_chat")}
-        </Button>
+        <GroupchatModal>
+          <Button
+            d="flex"
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+            rightIcon={<AddIcon />}
+          >
+            {t("create_chat")}
+          </Button>
+        </GroupchatModal>
       </Box>
       <Box
         d="flex"

@@ -35,5 +35,13 @@
   "error_search_title": "에러가 나다",
   "error_search_description": "검색할 수 없는",
   "my_chat": "대화를 나누다",
-  "create_chat": "그룹 생성"
+  "create_chat": "그룹 생성",
+  "name_group_chat": "이름",
+  "name_invite_group": "구성원 추가",
+  "accept_create_group": "그룹 생성",
+  "user_group_already": "이미 그룹에 있는 구성원",
+  "name_group": "그룹 이름은 비워둘 수 없습니다",
+  "count_members": "그룹을 만드는 데 최소 2명의 구성원이 필요함",
+  "create_group_success": "그룹 생성 성공",
+  "create_group_failed": "그룹 생성 실패"
 }

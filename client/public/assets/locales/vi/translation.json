@@ -35,5 +35,13 @@
   "error_search_title": "Xảy ra lỗi",
   "error_search_description": "Không thể tìm kiểm",
   "my_chat": "Trò chuyện",
-  "create_chat": "Tạo nhóm chat"
+  "create_chat": "Tạo nhóm chat",
+  "name_group_chat": "Tên phòng chat",
+  "name_invite_group": "Thêm thành viên",
+  "accept_create_group": "Tạo phòng",
+  "user_group_already": "Thành viên đã có trong nhóm",
+  "name_group": "Tên nhóm không được để trống",
+  "count_members": "Cần tối thiểu 2 thành viên để tạo nhóm",
+  "create_group_success": "Tạo nhóm thành công",
+  "create_group_failed": "Tạo nhóm thất bại"
 }
