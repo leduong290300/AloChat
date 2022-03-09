@@ -89,18 +89,7 @@ const AccessChats = asyncHandler(async (req, res) => {
  */
 
 const CreateGroupChat = asyncHandler(async (req, res) => {
-  if (!req.body.users || !req.body.name) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Vui lòng điền tất cả các trường" });
-  }
-
   let users = JSON.parse(req.body.users);
-
-  if (users.length < 2) {
-    return res.status(400).send("Cần tối thiểu 2 thành viên để tạo nhóm");
-  }
-
   users.push(req.user);
 
   try {
@@ -115,7 +104,7 @@ const CreateGroupChat = asyncHandler(async (req, res) => {
       .populate("users", "-password")
       .populate("groupAdmin", "-password");
 
-    res.status(200).json(fullGroupChat);
+    res.status(200).json({ fullGroupChat });
   } catch (error) {
     return res.status(500).json({
       success: false,
