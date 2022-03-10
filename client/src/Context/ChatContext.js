@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 import axios from "axios";
 
 import { apiUrl } from "../Api/Api";
@@ -6,18 +7,24 @@ import { apiUrl } from "../Api/Api";
 export const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
+  const {
+    authState: { user },
+  } = useContext(UserContext);
   const [selectedChat, setSelectedChat] = useState();
   const [results, setResults] = useState([]);
   const [chats, setChats] = useState([]);
+  const [fetchAgain, setFetchAgain] = useState(false);
 
   // Chọn người để trò chuyển
   const accessChat = async (userId) => {
     try {
       const { data } = await axios.post(`${apiUrl}/chat/access`, { userId });
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
-      setSelectedChat(data);
+      if (!chats.find((c) => c._id === data._id))
+        setChats([data.FullChat, ...chats]);
+      setSelectedChat(data.FullChat);
     } catch (error) {
-      console.log(error);
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
     }
   };
 
@@ -27,7 +34,8 @@ const ChatProvider = ({ children }) => {
       const { data } = await axios.get(`${apiUrl}/chat`);
       if (data) return setChats(data.results);
     } catch (error) {
-      console.log(error);
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
     }
   };
 
@@ -37,7 +45,8 @@ const ChatProvider = ({ children }) => {
       const { data } = await axios.get(`${apiUrl}/user/search?search=${query}`);
       setResults(data.users);
     } catch (error) {
-      console.log(error);
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
     }
   };
 
@@ -46,6 +55,47 @@ const ChatProvider = ({ children }) => {
     try {
       const { data } = await axios.post(`${apiUrl}/chat/group`, value);
       setChats([data.fullGroupChat, ...chats]);
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  //Cập nhật tên nhóm
+  const renameGroupChat = async (newName) => {
+    try {
+      const { data } = await axios.put(`${apiUrl}/chat/rename`, newName);
+      setSelectedChat(data.updatedChat);
+      setFetchAgain(!false);
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  //Mời thêm thành viên
+  const inviteMember = async (newUser) => {
+    try {
+      const { data } = await axios.put(`${apiUrl}/chat/group_add`, newUser);
+      setSelectedChat(data.added);
+      setFetchAgain(!false);
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  //Xóa thành viên khói nhóm
+  const removeMember = async (dataDelete) => {
+    try {
+      const { data } = await axios.put(
+        `${apiUrl}/chat/group_remove`,
+        dataDelete,
+      );
+      dataDelete.userId === user._id
+        ? setSelectedChat()
+        : setSelectedChat(data);
+      setFetchAgain(!false);
     } catch (error) {
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };
@@ -61,7 +111,13 @@ const ChatProvider = ({ children }) => {
     fetchChats,
     getUsers,
     results,
+    setResults,
     createGroupChat,
+    fetchAgain,
+    setFetchAgain,
+    renameGroupChat,
+    inviteMember,
+    removeMember,
   };
   return <ChatContext.Provider value={data}>{children}</ChatContext.Provider>;
 };

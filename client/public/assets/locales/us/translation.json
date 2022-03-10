@@ -43,5 +43,9 @@
   "name_group": "The group name cannot be left blank",
   "count_members": "Minimum 2 members required to create a group",
   "create_group_success": "Create group chat successfully",
-  "create_group_failed": "Create group chat failed"
+  "create_group_failed": "Create group chat failed",
+  "update_group": "Update group",
+  "loggout_group": "Leave group",
+  "only_admin_add": "Only admin can add someone!",
+  "only_admin_delete": "Only admin can remove someone!"
 }
