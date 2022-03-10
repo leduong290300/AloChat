@@ -4,13 +4,11 @@
 /node_modules
 /.pnp
 .pnp.js
-
 # testing
 /coverage
 
 # production
 /build
-/public/assets/locales
 # misc
 .DS_Store
 .env.local

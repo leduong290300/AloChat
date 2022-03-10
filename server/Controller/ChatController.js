@@ -91,13 +91,13 @@ const AccessChats = asyncHandler(async (req, res) => {
 const CreateGroupChat = asyncHandler(async (req, res) => {
   let users = JSON.parse(req.body.users);
   users.push(req.user);
-
+  console.log(req);
   try {
     const groupChat = await Chat.create({
       chatName: req.body.name,
       users: users,
       isGroupChat: true,
-      groupAdmin: req.user,
+      groupAdmin: req.userId,
     });
 
     const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
@@ -138,7 +138,7 @@ const RenameGroup = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Phòng chat không tồn tại");
   } else {
-    res.json(updatedChat);
+    res.json({ success: true, updatedChat });
   }
 });
 
@@ -200,7 +200,7 @@ const AddToGroup = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Phòng chat không tồn tại");
   } else {
-    res.json(added);
+    res.json({ success: true, added });
   }
 });
 

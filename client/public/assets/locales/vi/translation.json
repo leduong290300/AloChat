@@ -43,5 +43,9 @@
   "name_group": "Tên nhóm không được để trống",
   "count_members": "Cần tối thiểu 2 thành viên để tạo nhóm",
   "create_group_success": "Tạo nhóm thành công",
-  "create_group_failed": "Tạo nhóm thất bại"
+  "create_group_failed": "Tạo nhóm thất bại",
+  "update_group": "Cập nhật nhóm",
+  "loggout_group": "Rời khỏi nhóm",
+  "only_admin_add": "Chỉ có chủ phòng mới thêm được thành viên vào nhóm",
+  "only_admin_delete": "Chỉ có chủ phòng mới có thể xóa thành viên ra khỏi nhóm"
 }

@@ -53,6 +53,7 @@ export default function GroupchatModal({ children }) {
     }
   };
 
+  //Thêm thành viên vào danh dách nhóm
   const handleGroup = (user) => {
     if (selectUser.includes(user)) {
       toast({
@@ -123,7 +124,7 @@ export default function GroupchatModal({ children }) {
   return (
     <>
       <span onClick={onOpen}>{children}</span>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader

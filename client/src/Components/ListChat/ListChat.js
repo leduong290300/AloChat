@@ -6,8 +6,10 @@ import { AddIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
 import ChatLoading from "../ChatLoading/ChatLoading";
 import GroupchatModal from "../Modal/GroupchatModal";
+import { getSender } from "../../Utils/getSender";
+
 export default function ListChat() {
-  const { selectedChat, setSelectedChat, chats, fetchChats } =
+  const { selectedChat, setSelectedChat, chats, fetchChats, fetchAgain } =
     useContext(ChatContext);
 
   const [loggedUser, setLoggedUser] = useState();
@@ -17,11 +19,7 @@ export default function ListChat() {
   useEffect(() => {
     setLoggedUser(localStorage.getItem("user_id"));
     fetchChats();
-  }, []);
-
-  const getSender = (loggedUser, users) => {
-    return users[0]._id === loggedUser ? users[1].name : users[0].name;
-  };
+  }, [fetchAgain]);
 
   return (
     <Box
