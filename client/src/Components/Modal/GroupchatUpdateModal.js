@@ -22,7 +22,7 @@ import { ChatContext } from "../../Context/ChatContext";
 import { UserContext } from "../../Context/UserContext";
 import UserBadgeItem from "../UserBadgeItem/UserBadgeItem";
 import UserListItem from "../UserListItem/UserListItem";
-export default function GroupchatUpdateModal() {
+export default function GroupchatUpdateModal({ fetchMessage }) {
   const {
     selectedChat,
     results,
@@ -148,6 +148,7 @@ export default function GroupchatUpdateModal() {
         userId: userData._id,
       });
       setLoading(false);
+      fetchMessage();
     } catch (error) {
       toast({
         title: `${t("error_search_title")}`,

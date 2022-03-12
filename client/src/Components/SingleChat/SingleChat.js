@@ -1,17 +1,84 @@
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Box, IconButton, Text } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import {
+  Box,
+  FormControl,
+  IconButton,
+  Input,
+  Spinner,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
+import React, { useContext, useState, useEffect } from "react";
 import { ChatContext } from "../../Context/ChatContext";
 import { UserContext } from "../../Context/UserContext";
 import { getSender, getSenderFull } from "../../Utils/getSender";
 import ProfileModal from "../Modal/ProfileModal";
 import GroupchatUpdateModal from "../Modal/GroupchatUpdateModal";
-export default function SingleChat() {
-  const { selectedChat, setSelectedChat } = useContext(ChatContext);
+import "./SingleChat.css";
+import ListMessage from "../ListMessage/ListMessage";
 
+export default function SingleChat() {
+  const {
+    selectedChat,
+    setSelectedChat,
+    handleSendMessage,
+    handleFetchMessage,
+  } = useContext(ChatContext);
+  const [loading, setLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState("");
+  const { t } = useTranslation();
+  const toast = useToast();
   const {
     authState: { user },
   } = useContext(UserContext);
+
+  //Tải tin nhắn từ database
+  const fetchMessage = async () => {
+    if (!selectedChat) return;
+    try {
+      setLoading(true);
+      await handleFetchMessage(selectedChat._id);
+      setLoading(false);
+    } catch (error) {
+      toast({
+        title: `${t("error_search_title")}`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchMessage();
+  }, [selectedChat]);
+
+  //Gửi tin nhắn
+  const sendMessage = async (e) => {
+    if (e.key === "Enter" && newMessage) {
+      try {
+        setNewMessage("");
+        await handleSendMessage({
+          content: newMessage,
+          chatId: selectedChat._id,
+        });
+      } catch (error) {
+        toast({
+          title: `${t("error_search_title")}`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+      }
+    }
+  };
+
+  const handleOnChange = (e) => {
+    setNewMessage(e.target.value);
+  };
 
   return (
     <>
@@ -40,7 +107,7 @@ export default function SingleChat() {
             ) : (
               <>
                 {selectedChat.chatName.toUpperCase()}
-                <GroupchatUpdateModal />
+                <GroupchatUpdateModal fetchMessage={fetchMessage} />
               </>
             )}
           </Text>
@@ -53,7 +120,38 @@ export default function SingleChat() {
             h="100%"
             borderRadius="lg"
             overflow="hidden"
-          ></Box>
+            position="relative"
+          >
+            {loading ? (
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+                alignSelf="center"
+                margin="auto"
+              />
+            ) : (
+              <div className="message">
+                <ListMessage />
+              </div>
+            )}
+            <FormControl
+              onKeyDown={sendMessage}
+              isRequired
+              mt={3}
+              position="absolute"
+              style={{ left: "25px", bottom: "20px", width: "95%" }}
+            >
+              <Input
+                variant="filled"
+                bg="#e0e0e0"
+                value={newMessage}
+                onChange={handleOnChange}
+              />
+            </FormControl>
+          </Box>
         </>
       ) : (
         <Box d="flex" alignItems="center" justifyContent="center" h="100%">
