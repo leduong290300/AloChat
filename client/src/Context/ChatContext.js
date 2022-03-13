@@ -15,6 +15,7 @@ const ChatProvider = ({ children }) => {
   const [chats, setChats] = useState([]);
   const [fetchAgain, setFetchAgain] = useState(false);
   const [message, setMessage] = useState([]);
+  const [socketConnect, setSocketConnect] = useState(false);
 
   // Chọn người để trò chuyển
   const accessChat = async (userId) => {
@@ -103,17 +104,16 @@ const ChatProvider = ({ children }) => {
     }
   };
 
-  //Gửi tin nhắn
-  const handleSendMessage = async (value) => {
-    try {
-      const { data } = await axios.post(`${apiUrl}/message/send`, value);
-
-      setMessage([...message, data.message]);
-    } catch (error) {
-      if (error.response.data) return error.response.data;
-      else return { success: false, message: error.message };
-    }
-  };
+  // //Gửi tin nhắn
+  // const handleSendMessage = async (value) => {
+  //   try {
+  //     const { data } = await axios.post(`${apiUrl}/message/send`, value);
+  //     setMessage([...message, data.message]);
+  //   } catch (error) {
+  //     if (error.response.data) return error.response.data;
+  //     else return { success: false, message: error.message };
+  //   }
+  // };
 
   //Tải tin nhắn từ hệ thống
   const handleFetchMessage = async (chatId) => {
@@ -141,9 +141,12 @@ const ChatProvider = ({ children }) => {
     renameGroupChat,
     inviteMember,
     removeMember,
-    handleSendMessage,
+    // handleSendMessage,
     handleFetchMessage,
     message,
+    setMessage,
+    setSocketConnect,
+    socketConnect,
   };
   return <ChatContext.Provider value={data}>{children}</ChatContext.Provider>;
 };

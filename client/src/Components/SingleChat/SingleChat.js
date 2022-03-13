@@ -17,21 +17,60 @@ import ProfileModal from "../Modal/ProfileModal";
 import GroupchatUpdateModal from "../Modal/GroupchatUpdateModal";
 import "./SingleChat.css";
 import ListMessage from "../ListMessage/ListMessage";
+import io from "socket.io-client";
+import axios from "axios";
+import { apiUrl } from "../../Api/Api";
+import Lottie from "react-lottie";
+import animationData from "../../Animation/typing.json";
+const endpoint = "http://localhost:5000";
+
+let socket, selectedChatCompare;
 
 export default function SingleChat() {
   const {
     selectedChat,
     setSelectedChat,
-    handleSendMessage,
+    // handleSendMessage,
     handleFetchMessage,
+    setSocketConnect,
+    setMessage,
+    message,
+    socketConnect,
   } = useContext(ChatContext);
   const [loading, setLoading] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const { t } = useTranslation();
   const toast = useToast();
   const {
     authState: { user },
   } = useContext(UserContext);
+
+  useEffect(() => {
+    fetchMessage();
+    selectedChatCompare = selectedChat;
+  }, [selectedChat]);
+
+  useEffect(() => {
+    socket = io(endpoint);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnect(true));
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop_typing", () => setIsTyping(false));
+  }, []);
+
+  useEffect(() => {
+    socket.on("message_received", (newMessage) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessage.chat._id
+      ) {
+      } else {
+        setMessage([...message, newMessage]);
+      }
+    });
+  });
 
   //Tải tin nhắn từ database
   const fetchMessage = async () => {
@@ -40,6 +79,7 @@ export default function SingleChat() {
       setLoading(true);
       await handleFetchMessage(selectedChat._id);
       setLoading(false);
+      socket.emit("join_chat", selectedChat._id);
     } catch (error) {
       toast({
         title: `${t("error_search_title")}`,
@@ -51,19 +91,18 @@ export default function SingleChat() {
     }
   };
 
-  useEffect(() => {
-    fetchMessage();
-  }, [selectedChat]);
-
   //Gửi tin nhắn
   const sendMessage = async (e) => {
     if (e.key === "Enter" && newMessage) {
+      socket.emit("stop_typing", selectedChat._id);
       try {
         setNewMessage("");
-        await handleSendMessage({
+        const { data } = await axios.post(`${apiUrl}/message/send`, {
           content: newMessage,
           chatId: selectedChat._id,
         });
+        setMessage([...message, data.message]);
+        socket.emit("new_message", data.message);
       } catch (error) {
         toast({
           title: `${t("error_search_title")}`,
@@ -78,6 +117,30 @@ export default function SingleChat() {
 
   const handleOnChange = (e) => {
     setNewMessage(e.target.value);
+    if (!socketConnect) return;
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+    let lastTypingTime = new Date().getTime();
+    let timeLength = 3000;
+    setTimeout(() => {
+      let timeNow = new Date().getTime();
+      let timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timeLength && typing) {
+        socket.emit("stop_typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timeLength);
+  };
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
 
   return (
@@ -142,8 +205,19 @@ export default function SingleChat() {
               isRequired
               mt={3}
               position="absolute"
-              style={{ left: "25px", bottom: "20px", width: "95%" }}
+              style={{ left: "2px", bottom: "20px", width: "95%" }}
             >
+              {isTyping ? (
+                <>
+                  <Lottie
+                    width={70}
+                    style={{ marginBottom: 15, marginLeft: 0 }}
+                    options={defaultOptions}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
               <Input
                 variant="filled"
                 bg="#e0e0e0"

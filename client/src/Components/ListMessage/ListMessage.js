@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
 import { ChatContext } from "../../Context/ChatContext";
-import ScrollableFeed from "react-scrollable-feed";
+
 import { Avatar, Tooltip } from "@chakra-ui/react";
 import {
   isLastMessage,
@@ -16,7 +16,7 @@ export default function ListMessage() {
   } = useContext(UserContext);
   const { message } = useContext(ChatContext);
   return (
-    <ScrollableFeed>
+    <>
       {message &&
         message.map((m, i) => (
           <div style={{ display: "flex" }} key={m._id}>
@@ -49,6 +49,6 @@ export default function ListMessage() {
             </span>
           </div>
         ))}
-    </ScrollableFeed>
+    </>
   );
 }
