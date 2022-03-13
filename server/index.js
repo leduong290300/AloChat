@@ -18,7 +18,39 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, console.log("Server start with port", PORT));
+    const server = app.listen(
+      PORT,
+      console.log("Server start with port", PORT),
+    );
+    const io = require("socket.io")(server, {
+      pingTimeout: 60000,
+      cors: {
+        origin: "http://localhost:3000",
+      },
+    });
+    io.on("connection", (socket) => {
+      socket.on("setup", (userData) => {
+        socket.join(userData._id);
+        socket.emit("connected");
+      });
+      socket.on("join_chat", (room) => {
+        socket.join(room);
+      });
+
+      socket.on("new_message", (newMessage) => {
+        let chat = newMessage.chat;
+        if (!chat.users) return;
+        chat.users.forEach((user) => {
+          if (user._id == newMessage.sender._id) return;
+          socket.in(user._id).emit("message_received", newMessage);
+        });
+      });
+      socket.on("typing", (room) => socket.in(room).emit("typing"));
+      socket.on("stop_typing", (room) => socket.in(room).emit("stop_typing"));
+      socket.off("setup", () => {
+        socket.leave(userData._id);
+      });
+    });
   })
   .catch((err) => {
     console.log(err);
