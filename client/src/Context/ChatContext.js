@@ -16,6 +16,7 @@ const ChatProvider = ({ children }) => {
   const [fetchAgain, setFetchAgain] = useState(false);
   const [message, setMessage] = useState([]);
   const [socketConnect, setSocketConnect] = useState(false);
+  const [notification, setNotification] = useState([]);
 
   // Chọn người để trò chuyển
   const accessChat = async (userId) => {
@@ -147,6 +148,8 @@ const ChatProvider = ({ children }) => {
     setMessage,
     setSocketConnect,
     socketConnect,
+    notification,
+    setNotification,
   };
   return <ChatContext.Provider value={data}>{children}</ChatContext.Provider>;
 };

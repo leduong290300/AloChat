@@ -47,5 +47,8 @@
   "update_group": "Cập nhật nhóm",
   "loggout_group": "Rời khỏi nhóm",
   "only_admin_add": "Chỉ có chủ phòng mới thêm được thành viên vào nhóm",
-  "only_admin_delete": "Chỉ có chủ phòng mới có thể xóa thành viên ra khỏi nhóm"
+  "only_admin_delete": "Chỉ có chủ phòng mới có thể xóa thành viên ra khỏi nhóm",
+  "dont_new_message": "Không có tin nhắn mới",
+  "have_new_message_group": "Có tin nhắn mới từ nhóm",
+  "have_new_message": "Có tin nhắn mới từ"
 }
