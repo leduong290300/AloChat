@@ -27,6 +27,9 @@ import { ChatContext } from "../../Context/ChatContext";
 import ProfileModal from "../Modal/ProfileModal";
 import ChatLoading from "../ChatLoading/ChatLoading";
 import UserListItem from "../UserListItem/UserListItem";
+import { getSender } from "../../Utils/getSender";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
 
 export default function Navigation() {
   const [search, setSearch] = useState();
@@ -44,7 +47,8 @@ export default function Navigation() {
     getResultSearch,
   } = useContext(UserContext);
 
-  const { accessChat } = useContext(ChatContext);
+  const { accessChat, notification, setNotification, setSelectedChat } =
+    useContext(ChatContext);
 
   const handleLogout = () => logoutUser();
 
@@ -116,8 +120,31 @@ export default function Navigation() {
         <div>
           <Menu>
             <MenuButton p={1}>
+              <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              />
               <BellIcon fontSize="20px" m={1} />
             </MenuButton>
+            <MenuList pl={2}>
+              {!notification.length && `${t("dont_new_message")}`}
+              {notification.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((no) => no !== notif));
+                  }}
+                >
+                  {notif.chat.isGroupChat
+                    ? `${t("have_new_message_group")}: ${notif.chat.chatName}`
+                    : `${t("have_new_message")}: ${getSender(
+                        user,
+                        notif.chat.users,
+                      )}`}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>

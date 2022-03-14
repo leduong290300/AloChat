@@ -36,6 +36,10 @@ export default function SingleChat() {
     setMessage,
     message,
     socketConnect,
+    notification,
+    setNotification,
+    setFetchAgain,
+    fetchAgain,
   } = useContext(ChatContext);
   const [loading, setLoading] = useState(false);
   const [typing, setTyping] = useState(false);
@@ -66,6 +70,10 @@ export default function SingleChat() {
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessage.chat._id
       ) {
+        if (!notification.includes(newMessage)) {
+          setNotification([newMessage, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
       } else {
         setMessage([...message, newMessage]);
       }
