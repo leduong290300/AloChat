@@ -213,13 +213,14 @@ export default function SingleChat() {
               isRequired
               mt={3}
               position="absolute"
-              style={{ left: "2px", bottom: "20px", width: "95%" }}
+              style={{ left: "0", bottom: "5px", width: "100%" }}
             >
               {isTyping ? (
                 <>
                   <Lottie
                     width={70}
-                    style={{ marginBottom: 15, marginLeft: 0 }}
+                    height={10}
+                    style={{ marginBottom: 0, marginLeft: 5 }}
                     options={defaultOptions}
                   />
                 </>
@@ -227,7 +228,7 @@ export default function SingleChat() {
                 <></>
               )}
               <Input
-                variant="filled"
+                variant="outline"
                 bg="#e0e0e0"
                 value={newMessage}
                 onChange={handleOnChange}
