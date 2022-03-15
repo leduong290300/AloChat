@@ -18,6 +18,7 @@
     "socket.io": "^4.4.1"
   },
   "scripts": {
-    "server": "nodemon server/index"
+    "server": "nodemon server/index",
+    "start": "node server/index"
   }
 }
