@@ -6,6 +6,7 @@ const ChatRouter = require("./Router/ChatRouter");
 const MessageRouter = require("./Router/MessageRouter");
 const NotFound = require("./Router/NotFound");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const app = express();
 dotenv.config();
