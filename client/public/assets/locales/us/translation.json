@@ -50,5 +50,6 @@
   "only_admin_delete": "Only admin can remove someone!",
   "dont_new_message": "No new message",
   "have_new_message": "New message in",
-  "have_new_message_group": "New message from"
+  "have_new_message_group": "New message from",
+  "slogan": "Click on a user to start chatting"
 }

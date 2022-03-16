@@ -22,7 +22,7 @@ import axios from "axios";
 import { apiUrl } from "../../Api/Api";
 import Lottie from "react-lottie";
 import animationData from "../../Animation/typing.json";
-const endpoint = "https://alo-chat-app.herokuapp.com/";
+const endpoint = "http://localhost:5000";
 
 let socket, selectedChatCompare;
 
@@ -239,7 +239,7 @@ export default function SingleChat() {
       ) : (
         <Box d="flex" alignItems="center" justifyContent="center" h="100%">
           <Text fontSize="30px" pb={3} fontFamily="Worrk sans">
-            Hello
+            {t("slogan")}
           </Text>
         </Box>
       )}

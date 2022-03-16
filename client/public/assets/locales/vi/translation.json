@@ -50,5 +50,6 @@
   "only_admin_delete": "Chỉ có chủ phòng mới có thể xóa thành viên ra khỏi nhóm",
   "dont_new_message": "Không có tin nhắn mới",
   "have_new_message_group": "Có tin nhắn mới từ nhóm",
-  "have_new_message": "Có tin nhắn mới từ"
+  "have_new_message": "Có tin nhắn mới từ",
+  "slogan": "Nhấp vào người dùng để bắt đầu trò chuyện"
 }

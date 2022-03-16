@@ -50,5 +50,6 @@
   "only_admin_delete": "객실 주인만 그룹에서 멤버를 삭제할 수 있습니다",
   "dont_new_message": "새 메시지 없음",
   "have_new_message": "로부터 새로운 메시지가 있습니다",
-  "have_new_message_group": "그룹에서 새 메시지 있음"
+  "have_new_message_group": "그룹에서 새 메시지 있음",
+  "slogan": "사용자를 클릭하여 대화를 시작합니다"
 }
