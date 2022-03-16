@@ -4,7 +4,7 @@ const cors = require("cors");
 const UserRouter = require("./Router/UserRouter");
 const ChatRouter = require("./Router/ChatRouter");
 const MessageRouter = require("./Router/MessageRouter");
-const NotFound = require("./Router/NotFound");
+
 const mongoose = require("mongoose");
 
 const app = express();
@@ -69,4 +69,3 @@ app.use(express.json());
 app.use("/api/user", UserRouter);
 app.use("/api/chat", ChatRouter);
 app.use("/api/message", MessageRouter);
-app.use(NotFound);
