@@ -57,7 +57,12 @@ mongoose
     process.exit();
   });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.REACT_URL,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 //Router
@@ -65,9 +70,3 @@ app.use("/api/user", UserRouter);
 app.use("/api/chat", ChatRouter);
 app.use("/api/message", MessageRouter);
 app.use(NotFound);
-
-app.use(express.static(path.join(__dirname, "client/build")));
-
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});

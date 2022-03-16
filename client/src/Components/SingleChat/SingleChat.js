@@ -22,7 +22,10 @@ import axios from "axios";
 import { apiUrl } from "../../Api/Api";
 import Lottie from "react-lottie";
 import animationData from "../../Animation/typing.json";
-const endpoint = "https://alo-chat-app.herokuapp.com";
+const endpoint =
+  process.env.NODE_ENV !== "production"
+    ? "http://localhost:5000/"
+    : "https://alo-chat-app.herokuapp.com";
 
 let socket, selectedChatCompare;
 
